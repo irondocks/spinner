@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<script src="pipes.js"></script>
+
+<script>
+    window.m_seek = {"s": 0};
+    window.media = null;
+
+    var xy = {};
+
+    function getm() {
+        window.media = document.getElementById('video');
+        // window.media.seekable = true;
+        // window.media.currentTime = 1;
+        // window.media.startTime = 1;
+        // window.media.seekable = false;
+    }
+    
+</script>
+
+<script>    
+    
+     //{ right: false, left: false };
+    //var window.media.mp = document.getElementById('media.mp-video');
+    var t = { x: 0, y: 0};
+    function callbackRight()
+    {
+        window.media.seekable = true;
+        window.media.currentTime = m_seek["s"] + 2;
+        window.media.seekable = false;
+    }
+
+    function callbackLeft()
+    {
+        window.media.seekable = true;
+        window.media.currentTime = m_seek["s"] - 2;
+        window.media.seekable = false;
+    }
+
+    function easy () {
+        xy = window.media.getBoundingClientRect();
+        t = { x: getMousePos(media.onmousemove).x, y: getMousePos(media.onmousemove).y };
+
+        console.log(window.media.currentTime);
+        if (window.media.duration - 4 > window.media.currentTime + 2 && t.x < xy.right - (xy.width / 2))// && t.y >= xy.top && t.y <= xy.top + xy.height)
+        {
+            window.media.seekable = true;
+            window.media.currentTime += 2;
+            window.media.seekable = false;
+        }
+        else if (0 < window.media.currentTime - 2 && t.x > xy.right - (xy.width / 2))// && t.y >= xy.top && t.y <= xy.top + xy.height)
+        {
+            window.media.seekable = true;
+            window.media.currentTime -= 2;
+            window.media.seekable = false;
+        }
+        else if (window.media.duration - 3 < window.media.currentTime + 2)
+        {
+            window.media.seekable = true;
+            window.media.currentTime = 1;
+            window.media.seekable = false;
+        }
+        else //if (window.media.duration - 4 > window.media.currentTime + 2 && t.x > xy.right - (xy.width / 2))
+        {
+            window.media.seekable = true;
+            window.media.currentTime = window.media.duration - 1;
+            window.media.seekable = false;
+        }
+        // else
+        // if (Math.round(media.duration) - 3 < Math.round(m_seek['s']) )
+        // {
+        //     window.media.seekable = true;
+        //     window.media.currentTime = 1;
+        //     window.media.seekable = false;
+        // }
+        // else
+        // {
+        //     window.media.seekable = true;
+        //     window.media.currentTime = m_seek["s"] + 1;
+        //     window.media.seekable = false;
+        // }
+        
+
+    }
+
+    function getMousePos(e) {
+        return {
+            x: parseInt(event.pageX + document.body.scrollLeft),
+            y: parseInt(event.pageY + document.body.scrollTop)
+        };
+    }
+</script>
+
+<body onload="getm()" onmousedown="">
+    <br><br><br>
+<!-- <div onclick="fileOrder(this)" file-order="CA230312_121345.mp4" index="0"> -->
+    <video width="620" height="100" loop id="video" preload="auto" onmouseover="this.pause();"  onclick="easy();" poster="fire_crop.jpeg" playsinline>
+        <source id="srcVid" type="video/mp4" src="CA230312_121345.mp4"/>
+    </video>
+<!-- </div> -->
+</body>
